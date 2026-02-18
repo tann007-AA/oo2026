@@ -10,7 +10,6 @@ class internetipakett:
     
     def kas_sobib_perele(self, inimeste_arv):
         vajaminev_kiirus = inimeste_arv * self.varu_kasutaja_kohta
-        # Arvutame jäägi kohe alguses ära
         jaak = self.alla - vajaminev_kiirus
         
         print(f"ANALÜÜS {inimeste_arv} kasutaja puhul:")
@@ -35,4 +34,5 @@ pakett_max = internetipakett("Suur kodu", 300, 100, 60)
 pakett_mini.kas_sobib_perele(4)
 pakett_keskmine.kas_sobib_perele(4)
 pakett_max.kas_sobib_perele(4)
+
             
