@@ -3,3 +3,34 @@ Omaloodud funktsioon
 Igaüks koostab temaatilise spetsiifilise funktsiooni ning demonstreerib selle tööd näitandmete abil.
 
 Arvutus võib olla lihtne, aga lugejatel/kuulajatel võiks käsitletava teema kohta midagi õppida olla.
+
+Funktsiooni dokumentatsioon: arvuta_lugemisplaan
+1. Eesmärk
+Funktsiooni eesmärk on teisendada kasutaja toored sisendandmed (raamatu maht ja soovitud kiirus) teostatavaks tegevusplaaniks. See funktsioon on programmi "mootor", mis teeb kogu vajaliku arvutuse, et kasutaja ei peaks ise pead murdma.
+
+2. Sisetegurid (Parameetrid)
+Funktsioon vajab töötamiseks kolme sisendit (argumenti):
+
+raamatu_lehed: Raamatu kogupikkus (täisarv).
+
+min_lehekylje_kohta: Kui kiiresti kasutaja loeb (kümnendarv, nt 2.5 min/lk).
+
+paevade_arv: Aeg, mille jooksul kasutaja soovib raamatu läbi lugeda (täisarv).
+
+3. Loogika ja etapid (Samm-sammult)
+Funktsiooni töövoog jaguneb neljaks loogiliseks sammuks:
+
+A. Valideerimine (Kaitsemehhanism)
+Mida teeb: Kontrollib, kas sisestatud andmed on reaalselt kasutatavad.
+Miks: Et vältida "jagamine nulliga" viga (kui kasutaja sisestaks 0 päeva) või ebareaalseid tulemusi (nt 900 päeva). See tagab, et programm ei jookse kokku.
+
+B. Päevase koormuse arvutamineValem: Lehti päevas = kogulehekülgedearv / päevade arv
+Eesmärk: Leida kõige väiksem ühik, mida kasutaja peab iga päev jälgima.
+
+C. Ajakulu arvutamineValem: Aega päevas (minutites) = lehti päevas * lugemiskiirus (minutit lehekülje kohta)
+Eesmärk: Teisendada lehekülgede arv ajaks, sest "aeg" on kasutaja jaoks sageli hoomatavam kui "lehekülgede arv".
+
+D. Aja teisendamine (Tunnid ja minutid)See on kõige "targem" osa funktsioonist. Kuna vastus tuleb sageli minutites (nt 145 minutit), siis kasutame kahte matemaatilist operaatorit:
+Täisarvuline jagamine (//): Leiame, mitu täistundi mahub minutitesse (nt 145 // 60 = 2 tundi).
+Jäägi leidmine (%): Leiame järelejäänud minutid (nt 145 % 60 = 25 minutit).
+
