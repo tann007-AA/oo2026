@@ -1,38 +1,46 @@
-class internetipakett:
-    def __init__(self, nimi, alla, ules, hind):
-        self.nimi = nimi
-        self.alla = alla
-        self.ules = ules
-        self.hind = hind
+class Lugemisplaan:
+    def __init__(self, raamatu_lehed, min_lehekylje_kohta, paevade_arv):
+        #Konstruktor: Määratleb objekti andmeid.
+        self.raamatu_lehed = raamatu_lehed
+        self.min_lehekylje_kohta = min_lehekylje_kohta
+        self.paevade_arv = paevade_arv
+        
+    def arvuta(self):
+        #Meetod: Objekt arvutab oma andmete põhjal tulemuse.
+        if self.paevade_arv <= 0 or self.paevade_arv > 365:
+            return None
+        
+        lehti_paevas = self.raamatu_lehed / self.paevade_arv
+        minutid_kokku = lehti_paevas * self.min_lehekylje_kohta
+        
+        return {
+            "lehti": round(lehti_paevas, 1),
+            "tunnid": int(minutid_kokku // 60),
+            "minutid": int(minutid_kokku % 60),
+        }
     
-        # Eeldus: inimese kohta kulub 25Mbps
-        self.varu_kasutaja_kohta = 25
     
-    def kas_sobib_perele(self, inimeste_arv):
-        vajaminev_kiirus = inimeste_arv * self.varu_kasutaja_kohta
-        jaak = self.alla - vajaminev_kiirus
+    #Kasutajaliides (sama try-except loogikaga)
+try:
+    l = int(input("Raamatu lehekülhede arv: "))
+    k = float(input("Kiirus (min/lk): "))
+    p = int(input("Mitme päeva jooksul?: "))
         
-        print(f"ANALÜÜS {inimeste_arv} kasutaja puhul:")
         
-        if jaak > 0:
-            print(f"[OK] pakett '{self.nimi}' sobib. Varu jääb veel {jaak} Mbps")
-            
-        elif jaak == 0:
-            print(f"[ENAM-VÄHEM] pakett '{self.nimi}' võib sobida, aga tõenäoliselt muutub see tüütuks :)")
-            
-        else:
-            puudu = abs(jaak)
-            print(f"[HOIATUS] pakett '{self.nimi}' jääb aeglaseks. Puudu jääb u {puudu} Mbps")
-            
-        print("-" * 40)
+        #Loome objekti(instantsi)
+    plaan = Lugemisplaan(l, k, p)
         
-#Eksemplarid
-pakett_mini = internetipakett("Väike kodu", 50, 30, 15)
-pakett_keskmine = internetipakett("Keskmine kodu", 100, 60, 40)
-pakett_max = internetipakett("Suur kodu", 300, 100, 60)
-
-pakett_mini.kas_sobib_perele(4)
-pakett_keskmine.kas_sobib_perele(4)
-pakett_max.kas_sobib_perele(4)
-
+        #Käsime objektil arvutada
+    tulemus = plaan.arvuta()
+        
+    if tulemus:
+        print(f"\nLugemisplaan:")
+        print(f"- Pead lugema {tulemus['lehti']} lk/päevas.")
+        print(f"- See võtab {tulemus['tunnid']}h {tulemus['minutid']}min päevas")
+    else:
+        print("Viga. Sisestatud andmed ei päde")
             
+except ValueError:
+    print("Viga. Palun sisesta ainult numbrid.")
+        
+        
